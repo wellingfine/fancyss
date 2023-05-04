@@ -1,5 +1,347 @@
 fancyss_hnd Changelog
 ===========================================
+2.0.3
+   - update	此版本为过度版本，升级此版本后，可以继续升级到3.x.x版本，目前(2022年6月2日)最新为3.0.0
+   - note1	由于是过度版本，此版本实际上和3.0.0版本是一样的
+   - note2	升级到2.0.3/3.x.x版本后，插件更新，规则更新，二进制更新都将使用3.0分支
+       		为了避免对现有1.x.x - 2.x.x版本用户造成影响，master分支将不再维护，今后在3.0分支上维护
+       		fancyss 3.x.x更新日志：https://github.com/hq450/fancyss/blob/12fd5ac78bc7875154e42a394ae78153e01aebc8/Changelog.txt#L3-L16
+
+2.0.2
+   - update	移除插件在运行v2ray节点时，对RT-AC86U和TUF-AX3000需要虚拟内存的强制要求
+   - add	添加路由器工作模式检测，因为不少新手第一次会在非路由器模式下使用本插件，然而插件只能在路由器模式下运行
+   - update	修改订阅地址管理的提示文字，因为可能被人误以为是机场广告（本插件一直坚持免费且无任何推广）
+
+2.0.1
+   - fix	修复全新安装时，安装full版本也显示为lite版本的问题；
+   - fix	修复插件更新的一个问题；
+	
+2.0.0
+   - fix	修复节点列表里，节点类型可能显示错误的问题
+   - update	全功能版本的离线安装包更名为：fancyss_hnd_full.tar.gz（原名：shadowsocks.tar.gz）
+   - add	新增精简功能瘦身后的lite版本：fancyss_hnd_lite.tar.gz，安装包大小仅6.8MB，具体如下：
+       		------------------------------------------------------------------------------------------------
+   - note	现在打包插件生成fancyss_hnd_full.tar.gz（完整包）的同时，会生成对应版本的fancyss_hnd_lite.tar.gz安装包
+       		fancyss_hnd_lite版本精简了很多功能和二进制文件，使得安装包体积大大降低，但是主要功能都得到了保留
+       		1. 移除了v2ray、trojan二进制文件，默认使用xray-core来运行v2ray和trojan协议
+       		2. 移除了shdowsocks的v2ray-plugin插件功能及其对应的二进制文件：v2ray-plugin
+       		3. 移除了KCP加速功能及其二进制文件：speederv1、speederv2、udp2raw
+       		4. 移除了UDP加速功能及其二进制文件：kcptun
+       		5. 移除了koolgame协议支持及其二进制文件：koolgame、pdu
+       		6. 移除了负载均衡支持及其页面和二进制文件：haproxy
+       		7. 移除了直连解析（非远端解析）的国外DNS方案及其二进制文件：cdns、chinadns、chinadns1、smartdns
+       		   直连解析本身国外cdn效果就较差，很多时候还无法解锁Netflix！不过保留下了一个直连解析方案：https_dns_proxy
+       		   https_dns_proxy因为有ECS的支持，还是具有一定的cdn效果的（针对直连机场，中转机场效果可能差）
+       		   个人建议直接使用chinadns-ng即可，既有很好的国外（远端解析）和国内cdn效果，又可以帮dnsmasq减轻规则负担。
+       		8. 移除了haveged，因为现在较新的固件系统自带了熵增软件
+       		9. 移除了shdowsocks-rust替换shadowsocks-libev功能，默认由shadowsocks-libev运行ss协议
+       		10. 移除了socks5页面及其脚本及其acl规则文件
+       		总结1：和全功能版本相比，Lite版本没有KCP加速、UDP加速、SS+v2ray-plugin、负载均衡、独立的socks5设定、koolgame协议，并且精简了一些直连解析的国外DNS解析方案
+       		总结2：所以现在lite版本是支持SS、 SSR、 V2ray、 Xray、 Trojan 五种客户端的科学上网、游戏加速工具。
+       		如果是不折腾以上被精简功能的用户，完全可以使用体积更小的lite版本
+       		当然，RT-AX56U_V2这种jffs分区极小的机型，也建议直接使用lite版本
+       		要切换为lite版本，直接安装shadowsocks_lite.tar.gz即可，以后在线更新也维持为lite版本
+       		要切换为全功能版本，直接安装shadowsocks.tar.gz即可，以后在线更新也维持为全功能版本
+       		------------------------------------------------------------------------------------------------
+
+1.9.24
+   - fix	修复添加Xray Json配置，WebUI就丢失的问题 #32818
+   - add	现在可以用xray核心来跑trojan协议的节点了，功能位于【附加功能】
+   - update	完善xray和trojan的tcp fast open支持
+   - update	优化节点列表里类型的显示，替换核心后类型也会跟随变化
+   - update	kcptun二进制不再使用client_linux_armv7作为名字，更名为kcptun
+
+1.9.22 - 1.9.23
+   - fix	修复某些机场的trojan订阅端口不正确的问题
+   - fix	修复某些机场的trojan订阅SNI为空的问题
+   - fix	修复ssr://链接添加节点显示节点错误的问题
+
+1.9.21
+   - fix	修复shadowsocks-libev在开启多核心支持时，节点无法正常工作的问题
+   - fix	修复ss + v2ray-plugin下，v2ray-plugin没有启动的问题
+   - update	将v2ray-plugin更新到v4.45.0（秋水逸冰编译版本：https://github.com/teddysun/v2ray-plugin）
+   - fix	修复国外dns方案为chinadns-ng下，使用ss/ssr不显示ss-local工作状态的问题
+
+1.9.20
+   - fix	修复在账号设置面板内，无法修改节点模式的问题
+   - fix	修复shadowsocks-rust下游戏模式udp不通的问题
+   - fix	修复shadowsocks-rust下订阅无法走代理的问题
+
+1.9.19
+   - add	添加shadowsokcs-rust替换shadowsocks-libev功能。
+   - note	离线安装包默认不包含shadowsokcs-rust二进制文件sslocal，使用时会尝试自动下载，或者可以提前手动下载好。
+   - note	在我自己的测试中，shadowsokcs-rust速度略慢于shadowsocks-libev，所以目前尚未有完全用rust版本替代libev版本的计划
+   - update	v2ray二进制更新到v4.45。
+   - update	shadowsokcs在线订阅支持更多机场。
+   - fix	修复详细状态脚本
+
+1.9.18
+   - add	添加trojan支持，使用trojan-gfw作为核心（版本1.16.0）
+   - add	添加trojan节点添加、在线订阅、trojan://xxx链接添加节点功能。
+   - update	同步以下最新的内置规则。
+   - fix	修复修改v2ray和xray json节点无法保存的问题
+   - note	不再兼容1.2.0及之前版本直升上来的配置，如果是这种情况，请直接卸载重装插件。
+   - note	xray + trojan的坑基本填完，后续再继续对现有版本查漏补缺。
+   
+1.9.17
+   - note	继续修补1.9.15大更新带来的一些新问题，trojan的坑留继续往后推
+   - update	现在v2ray和xray节点非json模式下生成的配置文件将不会再带有null值
+   - fix	修复v2ray和xray节点在一些情况下生成错误的配置问题件问题
+   - fix	修复xray节点下无法使用v2ray/xray dns的问题
+   - fix	修复v2ray节点[SNI]，[多路复用 (Mux)], [Mux并发连接数]在主面板更改后无法保存的问题
+   - fix	修复xray节点[SNI]在主面板更改后无法保存的问题
+   - fix	修复v2ray和xray节点，使用kcp传输协议时，没有kcp seed选项的问题
+   - update	现在在没有节点的情况下，账号设置主面板将不会显示任何内容，直到用户添加了节点
+
+1.9.16
+   - fix	【订阅脚本】修复ss + simple-obfs节点在线订阅节点不正确的问题
+   - fix	修复ss + simple-obfs节点启动后工作不正常的问题
+   - note	上个版本更新太多有点遗漏，快速迭一个版本好了，trojan的坑留在1.9.17
+	
+1.9.15
+   - 摘要	1. 完善xray支持（包括vless节点添加，订阅）
+       		2. 更新chinadns-ng二进制文件，新增丢弃AAAA记录功能
+       		3. v2ray新增quic和grpc传输协议支持
+       		4. 进一步修复和优化订阅脚本
+       		4. UI上的一些小改进和优化
+       		5. 注意：此次更新后新版本的配置不能兼容老版本
+       		具体看以下更新日志：
+       		------------------------------------------------------------------------------------------------
+   - add	新增Xray类型节点添加功能，默认为VLESS协议（json模式支持更多协议）
+   - add	新增Xray类型节点订阅功能，订阅VLESS协议节点
+   - add	新增vless://链接添加节点的功能
+   - add	新增xray二进制更新功能
+   - update	xray二进制更新到1.5.5最新版本
+   - note	个人认为v2ray和xray以后注定会渐行渐远，在更多程度上互不兼容，所以目前插件同时保留了v2ray和xray
+       		因目前v2ray和xray之间存在一定兼容性，如v2ray可以跑vless协议，xray也可以跑vmess协议（但是在节点使用xtls传输时，则只能使用xray）
+       		所以为了区分，在本插件内，通过订阅和链接解析得到的节点，vmess协议属于v2ray节点，vless协议属于xray节点
+       		当然，如果你希望使用xray来跑vmess协议，你可以在【附加功能】中，用Xray核心替换V2ray，这样你的v2ray节点都是通过xray核心来跑的了。
+       		------------------------------------------------------------------------------------------------
+   - update	chinadns-ng更新到最新版本：v1.0-beta.25
+   - add	chinadns-ng解析功能添加丢弃AAAA记录（禁止解析到ipv6地址）功能。
+       		一般来说，ipv6会对过墙代理带来一定的麻烦，比如速度慢等。
+       		如果又希望开启路由器的ipv6功能，又不希望ipv6参与代理，可以开启此功能。
+       		开启后，清理掉PC的DNS缓存后，在分流检测里应该就看不到ipv6地址了。
+       		这样比如p2p下载还是可以从ipv6 peer获得速度，而github，谷歌等却不会通过ipv6访问。
+       		------------------------------------------------------------------------------------------------
+   - update	完善v2ray节点手工配置选项：
+       		1. 添加quic和grpc传输协议支持
+       		2. 新增kcp伪装类型dlts和wireguard
+       		2. tls传输：新增跳过证书验证 (AllowInsecure)选项
+       		3. tls传输：新增alpn选项
+       		4. tls传输：新增SNI选项
+       		5. 优化json配置文件生成
+   - remove	移除在v2ray节点json配置输入框内使用vmess://xxx添加节点功能，此类节点请前往【更新管理】 - 【通过ss/ssr/vmess/vless添加】中添加：
+       		------------------------------------------------------------------------------------------------
+   - add	【订阅脚本】新增isutf8二进制，用以对订阅脚本中的字符串进行合法校验：
+   - add	【订阅脚本】新增ss/vmess/vless订阅的关键词过滤功能，也就是现在所有在线订阅都支持关键词过滤了；
+   - add	【订阅脚本】现在curl和wget下载订阅失败后会尝试使用aria2c下载（需要软件中心安装aria2c插件，无需开启）；
+   - add	【订阅脚本】ss在线订阅现在可以添加v2ray-plugin类型节点了；
+   - add	【订阅脚本】现在通过ss://链接添加simple-obfs和v2ray-plugin类型节点了：
+   - update	【订阅脚本】优化订阅脚本，增加了对订阅中的字符串解析校验，防止因存入异常数据导致skipd数据库出错：
+   - update	【订阅脚本】兼容更多v2ray机场的订阅链接：
+   - update	【订阅脚本】现在订阅v2ray节点(vmess协议)可以支持quic和grpc传输节点的添加了：
+   - fix	【订阅脚本】修复通过ss/ssr/vmess/vless添加多个节点出错的问题：
+   - fix	【订阅脚本】修复通过ss/ssr/vmess/vless添加节点失败后输入框内遗留大段字符串问题：
+   - fix	【订阅脚本】修复通过ss/ssr/vmess/vless添加节点后节点名等出现乱码的问题：
+   - fix	【订阅脚本】修复机场更改一些节点配置，更新订阅后本地不更新的问题：
+   - fix	【订阅脚本】修复订阅失败后节点被删除的问题：
+   - fix	【订阅脚本】修复一些混合节点订阅的问题：
+   - note	由于订阅脚本更新较多，建议升级后删除全部订阅节点后重新订阅一次。
+       		------------------------------------------------------------------------------------------------
+   - update	【UI】订阅设置中现在默认显示[订阅地址管理]和[节点定于按钮]，其它高级选项如[订阅节点模式设定][订阅计划任务]等功能在视觉上做隐藏处理，
+       		即使视觉上做隐藏，功能上也不会屏蔽；你可以点击[订阅高级设定]勾选框调出或关闭订阅高级选项。
+   - fix	【UI】修复节点添加窗口位置：
+   - fix	【UI】现在分流检测窗口上方的链接：https://ip.skk.moe/ 可以直接点击了，这在弹窗里检测失败后可以方便的去浏览器新窗口检测。
+   - update	【UI】优化状态检测结果布局；现在状态检测会等结果出来后再显示，而不是先显示前一个结果。
+   - update	【UI】新增了一些帮助文字（点击相应选项的文字可见）。
+       		------------------------------------------------------------------------------------------------
+   - update	从此版本起，插件默认国内DNS更改为运营商DNS
+   - update	从此版本起，插件默认国外DNS设置为chinadms-ng，并并默认丢掉AAAA记录
+
+1.9.14
+   - update	更新shadowsocks-libev 二进制到最新v3.3.5版本
+   - update	同步kcptun二进制为官方最新release版本：20210922
+   - update	在v2ray json节点中配置VLESS-TCP + XTLS节点会自动启用Xray核心。
+   - update	同步最新内置规则；
+   - fix	修复v2ray二进制更新；
+   - remove	移除v2ctl二进制文件；
+
+1.9.13
+   - add	添加xray支持，版本1.5.4，为了更好的支持fancyss_hnd支持的众多机型，使用官方的Xray-linux-arm32-v7a二进制，且二进制经过upx压缩；
+       		在【附加功能】标签页中，你可以使用Xray核心替代V2ray核心
+       		1. 你可以用Xray-core跑所有的vmess和vless节点
+       		2. 使用Xray-core你还可以配置VLESS-TCP + XTLS节点，这点V2ray无法做到。
+       		3. 如果你的vmess节点不工作，也可以尝试使用Xray核心，看看是否正常。
+       		说明：目前还没有单独的vless协议节点的添加功能，但是你可以使用v2ray的json节点配置来添加vless节点！
+   - add	添加xray守护功能，同样可以在【附加功能】标签页中开启。
+   - fix	修复一些vmess/vless的json格式节点添加报错的问题。
+   - update	优化了故障转移的国内外日志显示，现在用emoji符号代替部分文字，尽量避日志免宽度超出又边框的问题。
+   - update	从此版本起，插件更新、规则更新、二进制更新强制使用ipv4。
+   - note	此版本更新后，fancyss_hnd插件包大小已经非常大了，后面会进行一些插件功能的精简，比如移除koolgame支持等。
+   
+1.9.12
+   - update	更新v2ray 二进制到最新release版本：4.44.0
+   - fix	修复某些ss机场无法订阅ss节点的问题（旧的订阅格式）
+
+1.9.11
+   - fix	【订阅脚本】修复因一些机场订阅因使用dos格式文本导致换行符出现问题，最终导致插件提示：skipd数据库错误的问题！
+
+1.9.10
+   - note	此版本不涉及任何功能性更新，主要解决ROG机型官改梅林互刷，插件的皮肤显示问题
+   - update	升级fancyss_hnd科学上网插件的皮肤控制，现在皮肤完全由nvram值sc_skin控制
+       		sc_skin=ASUSWRT, 华硕auswrt皮肤
+       		sc_skin=ROG, ROG骚红皮肤
+       		sc_skin=TUF, TFU橙黑皮肤
+       		比如GT-AC2900、GT-AX11000、GT-AX6000在官改和梅林改之间来回刷机，之前的版本需要覆盖安装一次本插件才能切换插件皮肤
+       		现在可以做到自动切换，不需用户干预了（sc_skin值由软件中心负责定义）。
+
+1.9.9
+   - note	升级到此版本后，已经订阅的节点可能需要删除重新订阅，或者连续订阅两次才能正常
+   - update	更新订阅脚本，支持SS节点订阅，支持带obfs-local混淆的ss节点订阅（带v2ray-plugin的ss订阅暂不支持）
+    		由于手上ss机场不多，所以支持不一定完美，不过手上的nextitally机场是支持OK的！
+   - update	订阅脚本其它的一些bug修复和细节优化！
+
+1.9.8
+   - update	更新插件的皮肤安装逻辑，以后如有机型更新应该不用再手动添加对应机型的UI支持了；
+    		比如GT-AX6000官改固件的ROG骚红UI，和GT-AX6000梅林改版固件的ASUSWRT UI，都能自动识别正确的UI进行安装；
+    		补充：如果你的GT-AC2900、GT-AX11000、GT-AX6000在官改和梅林改之间来回刷机，导致插件UI不正常的，重新覆盖安装一次本插件（≥1.9.8版本）即可恢复。
+   - update	同步最新内置规则。
+
+1.9.7
+   - fix	修复TUF-AX5400、GT-AXE11000梅林改版固件皮肤问题
+   - fix	兼容梅林固件/华硕官改等不同系统下不同的熵增软件，以避免冲突
+
+1.9.6
+   - update	添加GT-AX6000支持
+
+1.9.5
+   - fix	修复插件全新安装时，部分文件无法正确安装的问题。
+   
+1.9.4
+   - update	原先的分流检测不再准确，更换检测网站：https://ip.skk.moe/；
+   - update	更新订阅脚本，增加订阅成功率；并且现在wget也能走代理订阅了；
+   - remove	因dnsmasq-fastlookup版本和固件内dnsmasq版本差距越来越大，且有安全漏洞，故移除dnsmasq-fastlookup功能；
+   - update	因梅林386.2固件使用jitterentropy-rngd为系统提供更多熵，所以符合的固件不再安装haveged程序。
+   - update	更新插件安装脚本，支持GT-AX11000梅林固件。
+   - fix	修复插件启动前触发脚本部分的错误提示；
+
+
+1.9.3
+   - fix	修复部分机型，如RT-AC86U，从梅林固件刷为官改固件后，出现插件状态检测失败，导致故障转移功能无法使用的问题。
+   - fix	修复RT-AC86U 386固件皮肤错误问题。
+
+1.9.2
+   - fix	修复一些机场下载订阅为空的问题；
+   - update	同步最新规则，并且从gfwlist中移除apple.com域名。
+
+1.9.1
+   - update	更新httping，以适配华硕/梅林386改版固件环境；
+   - update	更新安装脚本；
+   - fix	修复ssconfig.sh 主脚本的一些语法错误。
+
+1.9.0
+   - add	添加armv7机型：RT-AX56U_V2（RT-AX56U热血版/青春版）ks官改固件支持。
+    		因为RT-AX56U_V2的JFFS分区只有15MB，且没有USB接口用以JFFS扩容！而fancyss_hnd安装包接近20MB！
+    		为了RT-AX56U_V2能顺利安装fancyss_hnd，部分功能的二进制文件将不会安装！
+    		所以RT-AX56U_V2机型安装后以下功能将无法使用，即使界面上显示有该功能！
+    			1. v2ray 功能
+    			2. koolgame 功能
+    			3. kcptun 功能
+    			4. shadowsocks-libev v2ray plugin 功能
+    			5. shadowsocks-libev obfs plugin 功能
+    			6. smartdns、chinadns1、chinadns2 功能
+    			7. udp加速内的所有功能：udp2ray、speederv1、speederv2
+    			8. 负载均衡功能
+    		其它功能，如ss、ssr、dns、负载均衡等不受影响！
+		其它机型的以上功能不会阉割！
+   - update	更新安装脚本：兼容未来可能的[hnd/axhnd/axhnd.675x]平台机型的ks官改固件支持。
+   - fix	修复卸载脚本：修复卸载插件的时候因部分文件没有删除干净，占用jffs分区的问题。
+
+1.8.9
+   - update	更新安装脚本，现在RT-AC86U 官改固件384_81918及其以后版本默认安装ASUSWRT风格皮肤。
+
+1.8.8
+   - add	添加armv7机型：ZenWiFi_XD4（灵耀AX魔方/RT-AX56_XD4）ks官改固件支持。
+   - update	同步安装包内置规则到最新。
+
+1.8.7
+   - add	添加armv7机型：ZenWiFi AX（灵耀 AX6600M/RT-AX95Q）ks官改固件支持。
+
+1.8.6
+   - update	repack；
+    		
+1.8.5
+   - revert	暂时回滚v2ray 到 v4.22.1，待近日v2ray-core的几个漏洞得到较好修复后再同步。
+
+1.8.4
+   - add	添加armv7机型：RT-AX82U官改固件支持。
+   - update	chinadns-ng、v2ray-plugin、smartdns更换为32位程序，以兼容BCM6750机型（TUF-AX3000、RT-AX82U等）
+   - update	更新chinadns-ng v1.0-beta.22 <https://github.com/zfl9/chinadns-ng>
+   - update	更新smartdns 1.2020.05.04-0005
+   - update	更新v2ray-plugin v1.3.1
+   - update	更新v2ray v4.23.3
+   - update	更新kcptun 20200409
+
+1.8.3	
+   - update	更新httping，支持ssl；
+   - update	更新smartdns二进制到(commit:198d18f)；
+   - update	更新haproxy二进制到2.1.2；
+   - update	更新kcptun二进制到20200103；
+   - update	优化了订阅脚本；
+   - add	添加chinadns-ng，此解析方式下不需要cnd.conf参与，详情：https://github.com/zfl9/chinadns-ng；
+    		PS:由于现在DNS方案错综复杂，下个版本应该会较大改动下这块。
+   - add	添加TUF-AX3000 koolshare官改固件支持，虽然TUF-AX3000使用的CPU：BCM6750是armv7l 32位cpu，
+    		但是其固件基本是和RT-AC86U一样的工具链编译的，所以将TUF-AX3000纳入支持，
+    		不过对于目前fancyss_hnd 1.8.2版本，TUF-AX3000暂时不能使用chinadns-ng，smartdns，v2ray-plugin这三个功能，
+    		因为这些功能使用的二进制是64位的，BCM6750作为32位cpu是不能运行的，后期版本将逐渐添加支持。		
+   
+1.8.1
+   - fix	修复因未定义[包括]关键词，导致所有订阅节点被删除的问题！
+
+1.7.9 - 1.8.0
+   - add	添加SmartDNS支持；
+   - update	重写了外国DNS的说明文档（在【外国DNS】字样上点击鼠标可见）；
+   - add	现在ssr订阅功能支持订阅部分节点，请前往【更新管理】中的[排除]关键词和[包括]关键词设置；
+    		[排除]关键词：含关键词的节点不会添加，多个关键词用英文逗号分隔，如：测试,过期,剩余,曼谷,M247,D01,硅谷,东京,V3
+    		[包括]关键词：含关键词的节点才会添加，多个关键词用英文逗号分隔，如：香港,新加坡
+    		详细说明鼠标点击对应功能名称可见。
+   - update	增加订阅成功率：现在使用curl下载订阅失败后，会自动使用wget重新尝试一次；
+   - update	现在v2ray模式下也能使用tcp fast open了；
+   - update	现在haveged随插件常驻启动，而不是之前在ss-libev启动时才启动；
+   - update	更新了故障检测功能，现在开启插件后能更快的进行故障检测；
+   - add	现在如果故障转移功能在后台切换了节点，且前端页面是打开的，那么前台会收到通知；
+   - add	现在状态检测可以自己选择检测时间间隔，默认4s - 7s；
+   - fix	修复了打包插件无法打包v2ray-plugin的问题；
+   - fix	修复导出插件配置恢复后，故障转移等一些功能的配置无法恢复的问题；
+   - fix	修复配置了v2ray-plugin的ss节点，因节点排序而丢失部分节点配置的问题；
+   
+
+1.7.8
+   - update	更换ss-*二进制使用shadowsocks-libev_3.3.3-1_arm_cortex-a5.ipk
+
+1.7.7
+   - fix	修复某些情况下，因SS/SSR/V2RAY线路挂掉导致【网络地图】中显示网络断开的问题；
+   - update	支持新的v2ray json配置格式，如：inbounds[],outbounds[]格式；
+   - update	更新安装包内置规则到最新。
+
+1.7.6
+   - update	压缩v2ray二进制
+
+1.7.5
+   - update	更新v2ray二进制到4.21.3
+
+1.7.4
+   - update	更新ss-local/redir/tunnel二进制到3.3.3
+
+1.7.3
+   - update	更新v2ray-plugin二进制到1.2.0
+
+1.7.2
+   - add	新增Shadowsocks的v2ray-plugin支持
+   - fix	修复了节点列表拖拽排序后，因为没有刷新节点选择导致的保存时覆盖了错误位置的节点配置
+   - fix	修复了从节点列表删除节点后帐号设置的节点选择选项没有更新的问题
+
 1.7.1
    - fix	修复【节点域名解析DNS服务器】无法选择IBM DNS的问题；
    - update	更新内置v2ray二进制到v4.20.0；
